@@ -7,7 +7,7 @@ const supabase = createClient(
   import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
 );
 
-export const Todo = () => {
+export const Record = () => {
   const [text, setText] = useState("");
   // 初期値は数値の0
   const [time, setTime] = useState(0);
@@ -44,7 +44,7 @@ export const Todo = () => {
 
   const onCLickDelete = async (id) => {
     await supabase.from("study-record").delete().eq("id", id);
-    setRecord((prev) => prev.filter((todo) => todo.id !== id));
+    setRecord((prev) => prev.filter((record) => record.id !== id));
   };
 
   // 保存時に数値化済みなのでNumber()が不要
@@ -52,7 +52,7 @@ export const Todo = () => {
     return a + b.time;
   }, 0);
 
-  const getAllTodos = async () => {
+  const getAllrecords = async () => {
     const { data } = await supabase.from("study-record").select();
 
     setRecord(data);
@@ -60,7 +60,7 @@ export const Todo = () => {
   };
 
   useEffect(() => {
-    getAllTodos();
+    getAllrecords();
   }, []);
 
   return (

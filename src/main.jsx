@@ -1,9 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Todo } from "./Todo.jsx";
+import { Record } from "./Record.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Todo />
+    <Record />
   </StrictMode>,
 );
