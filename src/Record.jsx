@@ -91,12 +91,16 @@ export const Record = () => {
         ) : (
           <ul>
             {/* recordsをmapで一覧表示 */}
-            {records.map((record) => (
-              <li key={record.id}>
-                {record.title}：{record.time}時間{" "}
-                <button onClick={() => onCLickDelete(record.id)}>削除</button>
-              </li>
-            ))}
+            {records.length ? (
+              records.map((record) => (
+                <li key={record.id}>
+                  {record.title}：{record.time}時間{" "}
+                  <button onClick={() => onCLickDelete(record.id)}>削除</button>
+                </li>
+              ))
+            ) : (
+              <p>データがありません</p>
+            )}
           </ul>
         )}
         <button onClick={addRecord}>登録</button>
