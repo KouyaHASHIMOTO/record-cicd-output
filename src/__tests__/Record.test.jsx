@@ -60,21 +60,24 @@ describe("Record", () => {
           error: null,
         })
         .mockResolvedValueOnce({
-          data: [{ title: "学習内容", time: 1 }],
+          data: [{ id: 1, title: "学習内容", time: 1 }],
           error: null,
         }),
+      delete: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockResolvedValue([]),
     });
     render(<Record />);
     const inputContent = screen.getByRole("textbox", { name: "学習内容" });
     const inputTime = screen.getByRole("spinbutton", { name: "学習時間" });
     const addButton = screen.getByRole("button", { name: "登録" });
-    const removeButton = screen.getByRole("button", { name: "削除" });
 
     fireEvent.change(inputContent, { target: { value: "学習内容" } });
     fireEvent.change(inputTime, { target: { value: 1 } });
     fireEvent.click(addButton);
+    const removeButton = await screen.findByRole("button", { name: "削除" });
+
     fireEvent.click(removeButton);
 
-    expect(screen.findByText("データがありません").toBeInTheDocument());
+    expect(await screen.findByText("データがありません")).toBeInTheDocument();
   });
 });
