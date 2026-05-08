@@ -21,20 +21,60 @@ describe("Record", () => {
       screen.getByRole("heading", { name: "学習記録一覧" }),
     ).toBeInTheDocument();
   });
-  /*  test("学習記録を登録できる", async () => {
+  test("学習内容を登録できてリストに表示されている", async () => {
+    createClient.mockReturnValue({
+      from: vi.fn().mockReturnThis(),
+      insert: vi.fn().mockReturnThis(),
+      select: vi
+        .fn()
+        .mockResolvedValueOnce({
+          data: [],
+          error: null,
+        })
+        .mockResolvedValueOnce({
+          data: [{ title: "学習内容", time: 1 }],
+          error: null,
+        }),
+    });
     render(<Record />);
     const inputContent = screen.getByRole("textbox", { name: "学習内容" });
     const inputTime = screen.getByRole("spinbutton", { name: "学習時間" });
     const addButton = screen.getByRole("button", { name: "登録" });
 
-    fireEvent.change(inputContent, { target: { value: "テスト内容" } });
+    fireEvent.change(inputContent, { target: { value: "学習内容" } });
     fireEvent.change(inputTime, { target: { value: 1 } });
     fireEvent.click(addButton);
 
     const list = await screen.findByRole("list");
-    expect(within(list).getByText(/テスト内容/)).toBeInTheDocument();
+    expect(within(list).getByText("学習内容：1時間")).toBeInTheDocument();
   });
-  test("削除ボタンを押すと学習記録が削除される", () => {
+
+  test("登録した学習内容を消すことができる", async () => {
+    createClient.mockReturnValue({
+      from: vi.fn().mockReturnThis(),
+      insert: vi.fn().mockReturnThis(),
+      select: vi
+        .fn()
+        .mockResolvedValueOnce({
+          data: [],
+          error: null,
+        })
+        .mockResolvedValueOnce({
+          data: [{ title: "学習内容", time: 1 }],
+          error: null,
+        }),
+    });
     render(<Record />);
-  }); */
+    const inputContent = screen.getByRole("textbox", { name: "学習内容" });
+    const inputTime = screen.getByRole("spinbutton", { name: "学習時間" });
+    const addButton = screen.getByRole("button", { name: "登録" });
+    const removeButton = screen.getByRole("button", { name: "削除" });
+
+    fireEvent.change(inputContent, { target: { value: "学習内容" } });
+    fireEvent.change(inputTime, { target: { value: 1 } });
+    fireEvent.click(addButton);
+    fireEvent.click(removeButton);
+
+    expect(screen.findByText("データがありません").toBeInTheDocument());
+  });
 });

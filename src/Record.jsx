@@ -2,11 +2,6 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-);
-
 export const Record = () => {
   const [text, setText] = useState("");
   // 初期値は数値の0
@@ -14,6 +9,11 @@ export const Record = () => {
   const [decision, setDecision] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [records, setRecord] = useState([]);
+
+  const supabase = createClient(
+    import.meta.env.VITE_SUPABASE_URL,
+    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+  );
 
   const addRecord = async () => {
     // 未入力チェック（timeは数値なのでtime === 0が正しく機能する）
