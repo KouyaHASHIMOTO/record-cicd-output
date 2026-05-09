@@ -80,4 +80,19 @@ describe("Record", () => {
 
     expect(await screen.findByText("データがありません")).toBeInTheDocument();
   });
+  test("入力しないで登録を押すとエラーが表示される", () => {
+    createClient.mockReturnValue({
+      from: vi.fn().mockReturnThis(),
+      insert: vi.fn().mockReturnThis(),
+      select: vi.fn().mockResolvedValue({ data: [], error: null }),
+    });
+    render(<Record />);
+    const addButton = screen.getByRole("button", { name: "登録" });
+
+    fireEvent.click(addButton);
+
+    expect(
+      screen.getByText("入力されていない項目があります"),
+    ).toBeInTheDocument();
+  });
 });
